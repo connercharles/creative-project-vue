@@ -64,10 +64,10 @@ export default {
               headers: {'Access-Control-Allow-Origin': '*'}
             };
             let response2 = await axios.get('https://cors-anywhere.herokuapp.com/https://dog.ceo/api/breeds/image/random', config)
-            console.log(response2)
+            // console.log(response2)
             this.imageR.url = response2.data.message;
             this.imageR.id = this.getID;
-            console.log(this.getID);
+            // console.log(this.getID);
             this.loading = false;
         }catch(err){
             console.log(err)

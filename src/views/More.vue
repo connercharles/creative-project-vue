@@ -57,13 +57,13 @@ export default {
             let response1 = await axios.get('https://cors-anywhere.herokuapp.com/https://randomuser.me/api/');
             this.imageL.url = response1.data.results[0].picture.large;
             this.imageL.id = this.getID;
-            console.log(response1)
+            // console.log(response1)
 
             // for person2
             let response2 = await axios.get('https://cors-anywhere.herokuapp.com/https://randomuser.me/api/');
             this.imageR.url = response2.data.results[0].picture.large;
             this.imageR.id = this.getID;
-            console.log(this.getID);
+            // console.log(this.getID);
             this.loading = false;
         }catch(err){
             console.log(err)
