@@ -66,7 +66,7 @@ export default {
             // console.log(this.getID);
             this.loading = false;
         }catch(err){
-            console.log(err)
+            // console.log(err)
         }
     },
     voteLeft() {
