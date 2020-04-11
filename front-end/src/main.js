@@ -4,12 +4,12 @@ import router from './router'
 
 Vue.config.productionTip = false
 
-let data = {
-  votes: []
-}
+// let data = {
+//   votesNum = 0
+// }
 
 new Vue({
   router,
-  data,
+  // data,
   render: h => h(App)
 }).$mount('#app')

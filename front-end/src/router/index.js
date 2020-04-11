@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Winners from '../views/Winners.vue'
 import More from '../views/More.vue'
+import Admin from '../views/Admin.vue'
 
 Vue.use(VueRouter)
 
@@ -21,6 +22,11 @@ const routes = [
     path: '/more',
     name: 'More',
     component: More
+  },
+  {
+    path: '/admin',
+    name: 'Admin',
+    component: Admin
   }
 ]
 

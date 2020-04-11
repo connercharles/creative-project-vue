@@ -37,11 +37,11 @@ export default {
       loading: true,
       imageL: {
         url: '',
-        id: '',
+        name: '',
       },
       imageR: {
         url: '',
-        id: '',
+        name: '',
       },
     }
   },
@@ -56,13 +56,13 @@ export default {
             this.loading = true;
             let response1 = await axios.get('https://cors-anywhere.herokuapp.com/https://randomuser.me/api/');
             this.imageL.url = response1.data.results[0].picture.large;
-            this.imageL.id = this.getID;
+            this.imageL.name = response1.data.results[0].name.first;
             // console.log(response1)
 
             // for person2
             let response2 = await axios.get('https://cors-anywhere.herokuapp.com/https://randomuser.me/api/');
             this.imageR.url = response2.data.results[0].picture.large;
-            this.imageR.id = this.getID;
+            this.imageR.name = response1.data.results[0].name.first;
             // console.log(this.getID);
             this.loading = false;
         }catch(err){
@@ -70,21 +70,22 @@ export default {
         }
     },
     voteLeft() {
-      let vote = { url: this.imageL.url, id: this.imageL.id};
-      this.$root.$data.votes.push(vote);
+      let vote = { url: this.imageL.url, name: this.imageL.name};
+      this.addVote(vote);
       this.loadImages();
     },
     voteRight() {
-      let vote = { url: this.imageR.url, id: this.imageR.id};
-      this.$root.$data.votes.push(vote);
+      let vote = { url: this.imageR.url, name: this.imageR.name};
+      this.addVote(vote);
       this.loadImages();
-    }
-
-
-  },
-  computed: {
-    getID() {
-      return this.$root.$data.votes.length;
+    },
+    async addVote(vote){
+      try {
+        await axios.post("/api/winners", vote);
+        return true;
+      } catch (error) {
+        console.log(error);
+      }
     }
   }
 }

@@ -37,11 +37,11 @@ export default {
       loading: true,
       imageL: {
         url: '',
-        id: '',
+        name: '',
       },
       imageR: {
         url: '',
-        id: '',
+        name: '',
       },
     }
   },
@@ -57,7 +57,9 @@ export default {
             axios.defaults.headers.common['x-api-key'] = "0187fafe-85e5-482e-af69-f60d5b8be06c"
             let response1 = await axios.get('https://api.thecatapi.com/v1/images/search', { params: { limit:1, size:"full" } } )
 
-            this.imageL = response1.data[0]
+            this.imageL.url = response1.data[0].url
+            this.imageL.name = response1.data[0].id
+            // console.log(response1)
 
             // for dog
             var config = {
@@ -66,7 +68,6 @@ export default {
             let response2 = await axios.get('https://cors-anywhere.herokuapp.com/https://dog.ceo/api/breeds/image/random', config)
             // console.log(response2)
             this.imageR.url = response2.data.message;
-            this.imageR.id = this.getID;
             // console.log(this.getID);
             this.loading = false;
         }catch(err){
@@ -74,21 +75,24 @@ export default {
         }
     },
     voteLeft() {
-      let vote = { url: this.imageL.url, id: this.imageL.id};
-      this.$root.$data.votes.push(vote);
+      let vote = { url: this.imageL.url, name: this.imageL.name};
+      // this.$root.$data.votes.push(vote);
+      this.addVote(vote);
       this.loadImages();
     },
     voteRight() {
-      let vote = { url: this.imageR.url, id: this.imageR.id};
-      this.$root.$data.votes.push(vote);
+      let vote = { url: this.imageR.url, name: this.imageR.name};
+      // this.$root.$data.votes.push(vote);
+      this.addVote(vote);
       this.loadImages();
-    }
-
-
-  },
-  computed: {
-    getID() {
-      return this.$root.$data.votes.length;
+    },
+    async addVote(vote){
+      try {
+        await axios.post("/api/winners", vote);
+        return true;
+      } catch (error) {
+        console.log(error);
+      }
     }
   }
 }
